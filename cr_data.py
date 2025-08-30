@@ -4,7 +4,7 @@ from database import Database
 import warnings
 warnings.filterwarnings("ignore")
 
-with open("comp.json", "r", encoding="utf-8") as f:
+with open("competitions.json", "r", encoding="utf-8") as f:
     competitions_info = json.load(f)
 
 print(competitions_info)
