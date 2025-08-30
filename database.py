@@ -58,15 +58,15 @@ class Database:
         drop_columns = ['Match Report', 'Score']
 
 
+        pattern = r"(?:\((\d*)\)\s*)?(\d+)\s*-\s*(\d+)(?:\s*\((\d*)\))?"
+        table["Score"] = table["Score"].str.replace(r"[–—−]", "-", regex=True).str.strip()
+
+        matches = table["Score"].str.extract(pattern)
+
+        table["Home Score"]   = pd.to_numeric(matches[1], errors="coerce")
+        table["Away Score"]   = pd.to_numeric(matches[2], errors="coerce")
+
         if not domestic:
-            pattern = r"(?:\((\d*)\)\s*)?(\d+)\s*-\s*(\d+)(?:\s*\((\d*)\))?"
-            table["Score"] = table["Score"].str.replace(r"[–—−]", "-", regex=True).str.strip()
-
-            matches = table["Score"].str.extract(pattern)
-
-            table["Home Score"]   = pd.to_numeric(matches[1], errors="coerce")
-            table["Away Score"]   = pd.to_numeric(matches[2], errors="coerce")
-
             table["Home Penalty"] = pd.to_numeric(matches[0], errors="coerce")
             table["Away Penalty"] = pd.to_numeric(matches[3], errors="coerce")
 
@@ -195,6 +195,7 @@ class Database:
                 df = pd.read_sql_table(table, self.engine)
                 results[table] = {
                     "rows": len(df),
+                    "cols" : df.columns.tolist()
                 }
             except Exception as e:
                 results[table] = {"error": str(e)}
