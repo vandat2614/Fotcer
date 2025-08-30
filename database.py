@@ -8,7 +8,7 @@ import re
 import pandas as pd
 from sqlalchemy import create_engine
 from langchain_community.utilities import SQLDatabase
-
+from langchain_community.tools.sql_database.tool import QuerySQLDatabaseTool
 
 class Database:
     def __init__(self, competitions_info: List[Dict]):
@@ -53,25 +53,31 @@ class Database:
         base_url = f'https://fbref.com/en/comps/{league_index}/history/{league_name}-Seasons'
         return self._fetch(base_url)
 
-    def _clean_table(self, table):
+    def _clean_table(self, table, domestic):
         
         drop_columns = ['Match Report', 'Score']
 
-        pattern = r"(?:\((\d*)\)\s*)?(\d+)\s*-\s*(\d+)(?:\s*\((\d*)\))?"
-        table["Score"] = table["Score"].str.replace(r"[–—−]", "-", regex=True).str.strip()
 
-        matches = table["Score"].str.extract(pattern)
-        table["Home Score"]   = pd.to_numeric(matches[1], errors="coerce")
-        table["Away Score"]   = pd.to_numeric(matches[2], errors="coerce")
+        if not domestic:
+            pattern = r"(?:\((\d*)\)\s*)?(\d+)\s*-\s*(\d+)(?:\s*\((\d*)\))?"
+            table["Score"] = table["Score"].str.replace(r"[–—−]", "-", regex=True).str.strip()
 
-        table["Home Penalty"] = pd.to_numeric(matches[0], errors="coerce")
-        table["Away Penalty"] = pd.to_numeric(matches[3], errors="coerce")
+            matches = table["Score"].str.extract(pattern)
 
-        table["Home Nation"] = table["Home"].str.rsplit(' ', n=1).str[1]
-        table["Away Nation"] = table["Away"].str.split(' ', n=1).str[0]
+            table["Home Score"]   = pd.to_numeric(matches[1], errors="coerce")
+            table["Away Score"]   = pd.to_numeric(matches[2], errors="coerce")
 
-        table["Home"] = table["Home"].str.rsplit(' ', n=1).str[0]
-        table["Away"] = table["Away"].str.split(' ', n=1).str[1]
+            table["Home Penalty"] = pd.to_numeric(matches[0], errors="coerce")
+            table["Away Penalty"] = pd.to_numeric(matches[3], errors="coerce")
+
+            table["Home Nation"] = table["Home"].str.rsplit(' ', n=1).str[1]
+            table["Away Nation"] = table["Away"].str.split(' ', n=1).str[0]
+
+            table["Home"] = table["Home"].str.rsplit(' ', n=1).str[0]
+            table["Away"] = table["Away"].str.split(' ', n=1).str[1]
+        elif 'Round' in table.columns:
+            table = table[~table['Round'].str.contains('Relegation', case=False, na=False)]
+            drop_columns.append('Round')
 
         table = table.drop(columns=drop_columns)
         table = table.rename(columns={'xG': 'Home xG', 'xG.1': 'Away xG'})
@@ -82,6 +88,10 @@ class Database:
         self.db_path = path
         self.engine = create_engine(f"sqlite:///{path}")
         self.db = SQLDatabase(engine=self.engine)
+
+        self.dialect = self.db.dialect
+        self.get_usable_table_names = self.db.get_usable_table_names
+        self.get_table_info = self.db.get_table_info
 
     def update(self, db_name=None, save_db_folder=None, save_data_folder=None):
         if not hasattr(self, "engine"):
@@ -99,6 +109,7 @@ class Database:
         for info in self.competitions_info:
             league_index = info["index"]
             league_name = info["name"]
+            domestic = info['domestic']
             table_name = league_name.replace("-", "")
 
             history = self._fetch_history(league_index, league_name)[0]
@@ -153,8 +164,13 @@ class Database:
                         os.makedirs(os.path.dirname(saved_path), exist_ok=True)
                         table.to_csv(saved_path, index=False)
 
-                    table = self._clean_table(table)
+                    table = self._clean_table(table, domestic)
                     table["Season"] = season
+
+                    if save_data_folder is not None:
+                        saved_path = os.path.join(save_data_folder+'_clean', table_name, season.replace("-", "_"), "schedule.csv")
+                        os.makedirs(os.path.dirname(saved_path), exist_ok=True)
+                        table.to_csv(saved_path, index=False)
 
                     try:
                         table.to_sql(name=table_name, con=self.engine, index=False, if_exists="append")
@@ -183,3 +199,13 @@ class Database:
             except Exception as e:
                 results[table] = {"error": str(e)}
         return results
+    
+    def run(self, query):
+
+        if not hasattr(self, "engine"):
+            raise RuntimeError("Database not loaded. Call load() first")
+
+        execute_query_tool = QuerySQLDatabaseTool(db=self.db)
+        result = execute_query_tool.invoke(query)
+
+        return result
