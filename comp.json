@@ -1,0 +1,74 @@
+[
+    {
+        "name": "World-Cup",
+        "index": 1
+    },
+    {
+        "name": "UEFA-Euro",
+        "index": 676
+    },
+    {
+        "name": "Champions-League",
+        "index": 8
+    },
+    {
+        "name": "Europa-League",
+        "index": 19
+    },
+    {
+        "name": "Conference-League",
+        "index": 882
+    },
+    {
+        "name": "Premier-League",
+        "index": 9
+    },
+    {
+        "name": "La-Liga",
+        "index": 12
+    },
+    {
+        "name": "Bundesliga",
+        "index": 20
+    },
+    {
+        "name": "Serie-A",
+        "index": 11
+    },
+    {
+        "name": "Ligue-1",
+        "index": 13
+    },
+    {
+        "name": "UEFA-Nations-League",
+        "index": 677
+    },
+    {
+        "name": "EFL-Cup",
+        "index": 690
+    },
+    {
+        "name": "FA-Cup",
+        "index": 514
+    },
+    {
+        "name": "Copa-del-Rey",
+        "index": 569
+    },
+    {
+        "name": "Supercopa-de-Espana",
+        "index": 646
+    },
+    {
+        "name": "Coupe-de-France",
+        "index": 518
+    },
+    {
+        "name": "DFB-Pokal",
+        "index": 521
+    },
+    {
+        "name": "Coppa-Italia",
+        "index": 529
+    }
+]
