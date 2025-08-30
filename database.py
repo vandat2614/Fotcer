@@ -53,7 +53,7 @@ class Database:
         base_url = f'https://fbref.com/en/comps/{league_index}/history/{league_name}-Seasons'
         return self._fetch(base_url)
 
-    def _clean_table(self, table, domestic):
+    def _clean_table(self, table, domestic, format):
         
         drop_columns = ['Match Report', 'Score']
 
@@ -66,18 +66,19 @@ class Database:
         table["Home Score"]   = pd.to_numeric(matches[1], errors="coerce")
         table["Away Score"]   = pd.to_numeric(matches[2], errors="coerce")
 
-        if not domestic:
+        if format == 'cup':
             table["Home Penalty"] = pd.to_numeric(matches[0], errors="coerce")
             table["Away Penalty"] = pd.to_numeric(matches[3], errors="coerce")
+        # elif 'Round' in table.columns:
+        #     table = table[~table['Round'].str.contains('Relegation', case=False, na=False)]
+        #     drop_columns.append('Round')
 
+        if not domestic:
             table["Home Nation"] = table["Home"].str.rsplit(' ', n=1).str[1]
             table["Away Nation"] = table["Away"].str.split(' ', n=1).str[0]
 
             table["Home"] = table["Home"].str.rsplit(' ', n=1).str[0]
             table["Away"] = table["Away"].str.split(' ', n=1).str[1]
-        elif 'Round' in table.columns:
-            table = table[~table['Round'].str.contains('Relegation', case=False, na=False)]
-            drop_columns.append('Round')
 
         table = table.drop(columns=drop_columns)
         table = table.rename(columns={'xG': 'Home xG', 'xG.1': 'Away xG'})
@@ -110,6 +111,7 @@ class Database:
             league_index = info["index"]
             league_name = info["name"]
             domestic = info['domestic']
+            format = info['format']
             table_name = league_name.replace("-", "")
 
             history = self._fetch_history(league_index, league_name)[0]
@@ -157,14 +159,17 @@ class Database:
                     if table is None:
                         print('\t\tNo table found')
                         continue
-                    table = table[0]
+
+                    if domestic and len(table) > 1:
+                        table = table[1]
+                    else: table = table[0]
 
                     if save_data_folder is not None:
                         saved_path = os.path.join(save_data_folder, table_name, season.replace("-", "_"), "schedule.csv")
                         os.makedirs(os.path.dirname(saved_path), exist_ok=True)
                         table.to_csv(saved_path, index=False)
 
-                    table = self._clean_table(table, domestic)
+                    table = self._clean_table(table, domestic, format)
                     table["Season"] = season
 
                     if save_data_folder is not None:
