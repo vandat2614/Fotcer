@@ -2,7 +2,7 @@ import os
 import time
 from typing import List, Dict
 import ast
-import urllib
+import urllib.request
 import re
 
 import pandas as pd
