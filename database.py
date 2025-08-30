@@ -166,7 +166,7 @@ class Database:
                         merged.to_sql(name=table_name, con=self.engine, index=False, if_exists="replace")
                     
                     if i < len(seasons) - 1:
-                        time.sleep(3)
+                        time.sleep(5)
 
         self._load(self.db_path)
 
