@@ -1,0 +1,22 @@
+[
+    {"name": "World-Cup",         "index": 1,   "domestic": false, "format": "cup"},
+    {"name": "UEFA-Euro",         "index": 676, "domestic": false, "format": "cup"},
+    {"name": "Champions-League",  "index": 8,   "domestic": false, "format": "cup"},
+    {"name": "Europa-League",     "index": 19,  "domestic": false, "format": "cup"},
+    {"name": "Conference-League", "index": 882, "domestic": false, "format": "cup"},
+    {"name": "UEFA-Nations-League","index": 677,"domestic": false, "format": "cup"},
+
+    {"name": "Premier-League",    "index": 9,   "domestic": true,  "format": "league"},
+    {"name": "La-Liga",           "index": 12,  "domestic": true,  "format": "league"},
+    {"name": "Bundesliga",        "index": 20,  "domestic": true,  "format": "league"},
+    {"name": "Serie-A",           "index": 11,  "domestic": true,  "format": "league"},
+    {"name": "Ligue-1",           "index": 13,  "domestic": true,  "format": "league"},
+
+    {"name": "EFL-Cup",           "index": 690, "domestic": true,  "format": "cup"},
+    {"name": "FA-Cup",            "index": 514, "domestic": true,  "format": "cup"},
+    {"name": "Copa-del-Rey",      "index": 569, "domestic": true,  "format": "cup"},
+    {"name": "Supercopa-de-Espana","index": 646,"domestic": true,  "format": "cup"},
+    {"name": "Coupe-de-France",   "index": 518, "domestic": true,  "format": "cup"},
+    {"name": "DFB-Pokal",         "index": 521, "domestic": true,  "format": "cup"},
+    {"name": "Coppa-Italia",      "index": 529, "domestic": true,  "format": "cup"}
+]
