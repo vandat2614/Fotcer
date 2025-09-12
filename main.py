@@ -58,15 +58,15 @@ from src.database_builder import build_database
 # comps = fetch_competitions()
 # comps.to_csv('1.csv')
 
-from src.database_manager import DatabaseManager
+# from src.database_manager import DatabaseManager
 
-db = DatabaseManager()
-print(db.read_table('Premier League Fixture')['Season'].value_counts())
+# db = DatabaseManager()
+# print(db.read_table('Premier League Fixture')['Season'].value_counts())
 # print(db.get_table_names())
 # db.read_table('EFL Cup History').to_csv('hehe.csv')
 # db.read_table('Competition').to_csv('comps.csv')
 
-# build_database('config.yaml')
+build_database('config.yaml')
 
 # config = {
 #     'country' : ['Spain', 'Portugal', 'Netherlands', 'Italy', 'Germany', 'France', 'England', 'Turkey'],
