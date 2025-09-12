@@ -1,8 +1,8 @@
 update:
-  country: False
-  club: False
-  competition: False
-  history: False
+  country: True
+  club: True
+  competition: True
+  history: True
   fixture: True
 
 country:
