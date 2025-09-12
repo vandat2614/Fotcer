@@ -1,0 +1,5 @@
+*.db
+
+tempCodeRunnerFile.py
+*.pyc
+__pycache__/
