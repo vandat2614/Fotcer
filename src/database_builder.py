@@ -189,7 +189,7 @@ def build_database(config_path: str, db_name: str = 'fotcer', saved_path: str = 
             if avail_seasons[0] not in update_seasons:
                 update_seasons.insert(0, avail_seasons[0])
 
-            for i, season in enumerate(update_seasons[:4]):
+            for i, season in enumerate(update_seasons):
                 indent_print(f'Season {season}', indent_level=1)
         
                 fixture = fetch_fixture(comp_name, comp_index, season)
