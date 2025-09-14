@@ -47,33 +47,30 @@ class DatabaseManager:
             df.to_sql(name=table_name, con=conn, index=False, if_exists=if_exists, **kwargs)
             conn.commit()
 
-    def add_records(self, table_name: str, table: pd.DataFrame) -> None:
+    def add_records(self, table_name: str, table: pd.DataFrame, subset: Optional[List[str]] = None) -> None:
         """
         Appends new records from a DataFrame into the specified table.
-        If DataFrame has extra/missing columns, it will be aligned with DB schema.
+        Removes duplicates based on subset of columns (or all columns if None).
         """
         if table.empty:
             raise ValueError("The provided DataFrame is empty. Nothing to add.")
 
         if self.is_table_existing(table_name):
-            existing_df = self.read_table(table_name).head(0) 
-            existing_cols = set(existing_df.columns)
-            new_cols = set(table.columns)
+            existing_df = self.read_table(table_name)
+            
+            combined = pd.concat([existing_df, table], ignore_index=True)
+            combined = combined.drop_duplicates(subset=subset)
 
-            common_cols = existing_cols.intersection(new_cols)
-            if not common_cols:
-                raise ValueError(f"No matching columns between DataFrame and table '{table_name}'.")
-
-            table = table.reindex(columns=existing_df.columns)
-
-        with self.engine.connect() as conn:
-            table.to_sql(
-                name=table_name,
-                con=conn,
-                index=False,
-                if_exists="append"
-            )
-            conn.commit()
+            with self.engine.connect() as conn:
+                combined.to_sql(
+                    name=table_name,
+                    con=conn,
+                    index=False,
+                    if_exists="replace"
+                )
+                conn.commit()
+        else:
+            self.write_dataframe(table, table_name, if_exists='replace')
 
     def delete_records(self, table_name: str, conditions: Dict[str, Any]) -> None:
         if not conditions:
@@ -89,9 +86,6 @@ class DatabaseManager:
 
         query = f'DELETE FROM "{table_name}" WHERE {" AND ".join(where_clauses)}'
         self.execute_query(query)        
-        # with self.engine.connect() as conn:
-        #     conn.execute(text(query), params)
-        #     conn.commit()
 
     def is_table_existing(self, table_name: str) -> bool:
         """Checks if a table exists in the database."""
@@ -103,7 +97,6 @@ class DatabaseManager:
         if not self.is_table_existing(table_name):
             return pd.DataFrame() 
         return self.execute_query(f'SELECT * FROM "{table_name}"')
-
 
     def get_inspector(self) -> Inspector:
         """Return the SQLAlchemy Inspector for introspection."""
@@ -173,7 +166,6 @@ class DatabaseManager:
             countries = pd.DataFrame(columns=["code", "name"])
 
         self._all_team_data = pd.concat([clubs, countries], ignore_index=True)
-
 
     def search_team(self, team_name: str, fuzzy_threshold: int = 90) -> Dict[str, Any]:
         """

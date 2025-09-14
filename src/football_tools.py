@@ -1,21 +1,15 @@
-# src/football_tools.py (Đã cập nhật - Hàm độc lập với @tool)
-
 import pandas as pd
 from rapidfuzz import process, fuzz
 from typing import Dict, Any, Union, Tuple, List, Optional
 
-# Cần các import này VÌ SỬ DỤNG @tool VÀ PYDANTIC TRỰC TIẾP Ở ĐÂY
 from langchain_core.tools import tool 
 from pydantic import BaseModel, Field
 
 from src.constants import SEARCH_STATUS_NOT_EXISTS, SEARCH_STATUS_CONFUSE, SEARCH_STATUS_SUCCESS
 from src.fetchers import fetch_h2h, fetch_match_detail
-from src.database_manager import DatabaseManager # Vẫn cần DatabaseManager để sử dụng
+from src.database_manager import DatabaseManager 
 
 
-# ==============================================================================
-# Pydantic Models cho Input Schema của Tools (Đặt ở đây)
-# ==============================================================================
 class Head2HeadInput(BaseModel):
     """Input for get_h2h tool."""
     first_team: str = Field(..., description="Name of the first team")
@@ -27,10 +21,6 @@ class MatchDetailInput(BaseModel):
     second_team: str = Field(..., description="Name of the second team")
     date: str = Field(..., description="Date of the match in YYYY-MM-DD format (e.g., 'YYYY-MM-DD')")
 
-
-# ==============================================================================
-# Global / Module-level variable để lưu trữ dữ liệu đội (cần khởi tạo)
-# ==============================================================================
 _ALL_TEAM_DATA: Optional[List[Dict[str, str]]] = None
 _ALL_TEAM_DISPLAY_NAMES: Optional[List[str]] = None
 _DB_MANAGER: Optional[DatabaseManager] = None
@@ -50,7 +40,6 @@ def _initialize_team_data_and_db_manager(db_manager: DatabaseManager) -> None:
             print("Fuzzy matching for team names might be limited or unavailable. Ensure the database is built.")
             _ALL_TEAM_DATA = []
             _ALL_TEAM_DISPLAY_NAMES = []
-
 
 def _search_team_internal(team_name: str) -> Dict[str, Any]:
     """
@@ -164,14 +153,6 @@ def _search_match_internal(first_team_input: str, second_team_input: str, date: 
         'match_code' : match_row['Match Code'], 
         'competition' : match_row['Comp']
     }
-
-# ==========================================================================
-# Public Langchain Tools (Hàm độc lập với @tool)
-# ==========================================================================
-# Các hàm này sẽ trực tiếp là Langchain Tool.
-# Chúng cần nhận db_manager như một tham số nếu chúng cần nó.
-# Tuy nhiên, vì _initialize_team_data_and_db_manager đã thiết lập biến global,
-# các hàm này có thể gọi các helper mà không cần truyền db_manager trực tiếp.
 
 @tool(args_schema=Head2HeadInput) 
 def get_h2h(first_team: str, second_team: str) -> Union[str, pd.DataFrame]:

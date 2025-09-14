@@ -1,42 +1,15 @@
 import pandas as pd
-from typing import Any, Dict, Generator, Tuple, List, Literal
+from typing import Any, Dict, Generator
 
-from src.utils import indent_print, load_config, report_country_stats, report_club_stats, report_competition_stats
-from src.df_utils import filter_countries, filter_clubs, filter_competitions
-from src.fetchers import fetch_country, fetch_club, fetch_competitions, fetch_history, fetch_fixture
 from src.database_manager import DatabaseManager 
+from src.fetchers import fetch_club, fetch_history, fetch_fixture
+from src.utils import indent_print, load_config, report_country_stats, report_club_stats, report_competition_stats
 
 import warnings
 warnings.filterwarnings('ignore')
 
-def _get_and_process_countries(config: Dict[str, Any] = {}) -> Tuple[pd.DataFrame, Dict[str, Dict[str, Any]]]:
-    """
-    Fetches raw country data, applies filters, and computes statistics.
-    Returns filtered DataFrame and a dictionary of statistics.
-    """
-    raw_countries = fetch_country()
-    
-    total_stats: Dict[str, Dict[str, Any]] = {} 
-    for gov in raw_countries['Governing Body'].unique():
-        df_gov = raw_countries[raw_countries['Governing Body'] == gov]
-        total_stats[gov] = {'total': len(df_gov)}
-
-    filtered_countries = filter_countries(raw_countries, config)
-    for gov in total_stats.keys():
-        current_filtered_countries = filtered_countries[
-            filtered_countries['Governing Body'] == gov
-        ]
-        total_stats[gov]['filtered_count'] = current_filtered_countries['Country'].nunique()
-        total_stats[gov]['filtered_names'] = current_filtered_countries['Country'].to_list()
-
-    return filtered_countries.reset_index(drop=True), total_stats
 
 def _get_and_process_clubs(enable_countries : pd.DataFrame) -> Generator[Dict[str, Any], None, None]:
-    """
-    Fetches raw country data, applies *club_filter_config's country/governing filters* to decide
-    which countries to fetch clubs for. Then fetches club data, applies remaining club filters,
-    and computes statistics for clubs.
-    """
     countries_to_fetch_clubs = enable_countries.sort_values(
         by=['Governing Body', 'Country'], ascending=True
     ).reset_index(drop=True)
@@ -57,15 +30,15 @@ def _get_and_process_clubs(enable_countries : pd.DataFrame) -> Generator[Dict[st
             yield {'data': pd.DataFrame(), 'stats': current_country_stats}
             continue
 
-        # indent_print(f'  Fetching clubs for {country_name}...', indent_level=2)
         all_clubs = fetch_club(country_name, country_code)
         filtered_clubs = all_clubs[all_clubs['Gender'] == 'M']
+        filtered_clubs = filtered_clubs.drop(columns='Gender')
 
         current_country_stats['filtered_names'] = filtered_clubs['Club'].to_list()
         yield {'data': filtered_clubs, 'stats': current_country_stats}
 
 def build_database(config_path: str, db_name: str = 'fotcer', saved_path: str = None, overwrite_db: bool = False) -> None:
-    """Orchestrates the process of fetching, filtering, and storing football data into a SQLite database."""
+    """Orchestrates the process of fetching, filtering, and storing into a database."""
     
     indent_print('=== STARTING DATABASE BUILD ===\n', indent_level=0)
 
@@ -139,9 +112,8 @@ def build_database(config_path: str, db_name: str = 'fotcer', saved_path: str = 
 
         if not db_manager.is_table_existing('Competition'):
             raise ValueError("You must build the Competition table before updating history.")
-        
+
         competitions = db_manager.read_table('Competition')
-        # competitions = competitions[competitions['Category'] == 'Domestic Leagues - 1st Tier']
 
         for idx, row in competitions.iterrows():
             comp_name = row['Competition Name']
@@ -149,15 +121,12 @@ def build_database(config_path: str, db_name: str = 'fotcer', saved_path: str = 
             category = row['Category']
             
             history_df = fetch_history(comp_index, category)
-
-
-
             seasons = ', '.join(history_df['Season'].tolist())
-
-            indent_print(f'\n[{comp_name}] - Avail seasons: {seasons}', indent_level=1)
 
             table_name = f'{comp_name} History'
             db_manager.write_dataframe(history_df, table_name=table_name, if_exists='replace')
+
+            indent_print(f'\n[{comp_name}] - Avail seasons: {seasons}', indent_level=1)
 
     if update_config['fixture']:
         indent_print('\n=== UPDATING COMPETITION FIXTURES ===', indent_level=0)
@@ -205,7 +174,7 @@ def build_database(config_path: str, db_name: str = 'fotcer', saved_path: str = 
                 if match_code is not None:
                     fixture = fetch_fixture(match_code=match_code)
                 else: 
-                    fixture = fetch_fixture(comp_name, comp_index, season)
+                    fixture = fetch_fixture(comp_name, comp_index, season, category=comp_category)
 
                 if fixture is None:
                     indent_print(f'- Season {season}, no data found', indent_level=2)
@@ -218,9 +187,8 @@ def build_database(config_path: str, db_name: str = 'fotcer', saved_path: str = 
                 if not db_manager.is_table_existing(table_name):
                     db_manager.write_dataframe(fixture, table_name, if_exists='replace')
                 else:
-                    db_manager.delete_records(table_name, conditions={'Season' : season})
-                    db_manager.add_records(table_name, fixture)
+                    # db_manager.delete_records(table_name, conditions={'Season' : season})
+                    db_manager.add_records(table_name, fixture, subset=['Date', 'Home', 'Away'])
                 indent_print(f'- Season {season}, add {len(fixture)} matches\n', indent_level=2)
-
 
     indent_print('\n=== DATABASE BUILD COMPLETE ===\n', indent_level=0)

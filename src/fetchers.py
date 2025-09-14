@@ -7,15 +7,15 @@ from io import StringIO
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 from functools import lru_cache
-from typing import Tuple, List, Dict, Any, Optional
+from typing import Tuple, List, Dict, Any
 
 from src.utils import normalize_string_for_url, extract_hrefs
-from src.df_utils import clean_table, process_fixture, add_match_code, match_info_to_df
+from src.df_utils import clean_table, process_fixture, add_match_code, match_info_to_df, split_champion_column
 from src.constants import FBREF_BASE_URL, USER_AGENT, STATS_TABLE_CLASS, COUNTRY_CODE_MAPPING, COMPETITION_CATEGORIES
 from .parsers import get_match_events, get_match_lineups, get_match_stats, get_match_info
 
 @lru_cache(maxsize=None)
-def _fetch(url: str) -> Tuple[List[pd.DataFrame], BeautifulSoup, List[Tag]]: # Thay đổi kiểu trả về để bao gồm tables_html (List[Tag])
+def _fetch(url: str) -> Tuple[List[pd.DataFrame], BeautifulSoup, List[Tag]]: 
     """
     Fetches HTML from a given URL, cleans it, and parses it into pandas DataFrames
     and a BeautifulSoup object. Also returns raw HTML tables as Tag objects.
@@ -31,11 +31,11 @@ def _fetch(url: str) -> Tuple[List[pd.DataFrame], BeautifulSoup, List[Tag]]: # T
 
         tables = pd.read_html(StringIO(html_str), attrs={'class': STATS_TABLE_CLASS})
         soup = BeautifulSoup(html_str, 'lxml')
-        tables_html_tags = soup.find_all('table', {'class': STATS_TABLE_CLASS}) # Tên rõ ràng hơn
+        tables_html_tags = soup.find_all('table', {'class': STATS_TABLE_CLASS}) 
         
         time.sleep(5) 
         
-        return tables, soup, tables_html_tags # Trả về cả soup và tables_html_tags
+        return tables, soup, tables_html_tags 
 
     except urllib.error.URLError as e:
         # print(f"URL Error for {url}: {e.reason}")
@@ -50,20 +50,18 @@ def _fetch(url: str) -> Tuple[List[pd.DataFrame], BeautifulSoup, List[Tag]]: # T
 def fetch_country() -> pd.DataFrame:
     """Fetches country data from FBref, including country codes and national team codes."""
     url = f'{FBREF_BASE_URL}/en/countries/'
-    tables, soup, tables_html_tags = _fetch(url) # Nhận cả tables_html_tags
-    table = clean_table(tables[0]) # tables[0] là DataFrame
+    tables, soup, tables_html_tags = _fetch(url) 
+    table = clean_table(tables[0]) 
 
-    # Giả định bạn muốn extract_hrefs từ bảng đầu tiên
     html_table_tag = tables_html_tags[0] 
     
-    # Extract country codes từ bảng đầu tiên
     country_hrefs = extract_hrefs(html_table_tag, pattern='^/en/country/[A-Z]+/[A-Za-z-]+$')
     country_codes = [href.split('/')[3] for href in country_hrefs]
 
     table['Country Code'] = country_codes
 
     national_team_href_pattern = r'^/en/squads/([a-z0-9]+)/history/([A-Za-z0-9\-]+)-Stats-and-History$'
-    national_team_hrefs = extract_hrefs(html_table_tag, national_team_href_pattern) # Sử dụng html_table_tag
+    national_team_hrefs = extract_hrefs(html_table_tag, national_team_href_pattern) 
     national_codes = [href.split('/')[3] for href in national_team_hrefs]
 
     index = 0
@@ -80,13 +78,13 @@ def fetch_country() -> pd.DataFrame:
 def fetch_club(country_name : str, country_code : str) -> pd.DataFrame:
     """Fetches club data for a specific country from FBref."""
     url = f'{FBREF_BASE_URL}/en/country/clubs/{country_code}/{normalize_string_for_url(country_name)}-Football-Clubs'
-    tables, soup, tables_html_tags = _fetch(url) # Nhận cả tables_html_tags
+    tables, soup, tables_html_tags = _fetch(url) 
 
     table = clean_table(tables[0])
     table.rename(columns={'Squad' : 'Club'}, inplace=True)
 
     club_href_pattern = r'^/en/squads/([a-z0-9]+)/history/([A-Za-z0-9\-]+)-Stats-and-History$'
-    club_hrefs = extract_hrefs(tables_html_tags[0], club_href_pattern) # Sử dụng tables_html_tags[0]
+    club_hrefs = extract_hrefs(tables_html_tags[0], club_href_pattern) 
     club_codes = [href.split('/')[3] for href in club_hrefs]
     
     table['Club Code'] = club_codes
@@ -100,10 +98,9 @@ def fetch_h2h(first_team_name: str, first_team_code: str, second_team_name: str,
         f'{FBREF_BASE_URL}/en/stathead/matchup/teams/{first_team_code}/{second_team_code}/'
         f'{normalize_string_for_url(first_team_name)}-vs-{normalize_string_for_url(second_team_name)}-History'
     )
-    tables, soup, tables_html_tags = _fetch(url) # Nhận cả tables_html_tags
+    tables, soup, tables_html_tags = _fetch(url) 
     
     table = clean_table(tables[0])
-    # add_match_code cần một Tag, nên truyền tables_html_tags[0] vào đây
     table = add_match_code(table, tables_html_tags[0]) 
     table = process_fixture(table)
 
@@ -115,10 +112,7 @@ def fetch_match_detail(match_code: str) -> Dict[str, Dict[str, Any]]:
     including lineups, match info, events, and stats.
     """
     url = f"{FBREF_BASE_URL}/en/matches/{match_code}"
-
-    # Use _fetch for consistency and caching
-    # For match_detail, we primarily need the full soup object for parsing
-    _, soup, _ = _fetch(url) # Bỏ qua tables và tables_html_tags nếu không cần
+    _, soup, _ = _fetch(url) 
 
     lineups = get_match_lineups(soup)
     match_info = get_match_info(soup)
@@ -175,18 +169,8 @@ def fetch_competitions() -> pd.DataFrame:
     
     return pd.concat(clean_tables, ignore_index=True)
 
-def split_champion_column(table: pd.DataFrame) -> pd.DataFrame:
-    """Splits the 'Champion' column into two columns 'Champion' and 'Point'
-    """
-    split_data = table['Champion'].str.rsplit('-', n=1, expand=True)
 
-    table['Champion'] = split_data[0].str.strip()
-    table['Points'] = pd.to_numeric(split_data[1].str.strip(), errors='coerce')
-
-    table[['Champion', 'Points']] = table[['Champion', 'Points']].fillna("Season not finished yet")
-    return table
-
-def fetch_history(comp_index: str, category: str) -> pd.DataFrame: # Kiểu trả về là DataFrame
+def fetch_history(comp_index: str, category: str) -> pd.DataFrame:
     """Fetches the historical data for a specific competition."""
 
     url = f"{FBREF_BASE_URL}/en/comps/{comp_index}/history"
@@ -218,7 +202,7 @@ def fetch_history(comp_index: str, category: str) -> pd.DataFrame: # Kiểu tr�
 
     return table
 
-def fetch_fixture(comp_name : str = None, comp_index : str = None, season : str = None, match_code : str = None):
+def fetch_fixture(comp_name : str = None, comp_index : str = None, season : str = None, match_code : str = None, category : str = None) -> pd.DataFrame:
     if match_code:
         url = f"{FBREF_BASE_URL}/en/matches/{match_code}"
         tables, soup, tables_html_tags = _fetch(url) 
@@ -235,6 +219,10 @@ def fetch_fixture(comp_name : str = None, comp_index : str = None, season : str 
     
     table = clean_table(tables[0])
     table = add_match_code(table, tables_html_tags[0])
+
+    if ('International' in category) or ('National' in category):
+        table['Home'] = table['Home'].str.rsplit(' ', n=1).str[0]
+        table['Away'] = table['Away'].str.split(' ', n=1).str[1]
 
     return process_fixture(table)
 

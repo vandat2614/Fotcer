@@ -67,7 +67,7 @@ def _parse_stat_value(td: Tag, stat_name: str) -> Any:
             made, total = match.groups()
             return {
                 'success': int(made),
-                'total': int(total), # Changed 'made' to 'total' for clarity
+                'total': int(total), 
                 'percent': percent
             }
         else:
@@ -80,7 +80,6 @@ def parse_team_basic_stats(div: Tag) -> Dict[str, Dict[str, Any]]:
         return {}
 
     team_cells = table.find('tr').find_all('th')
-    # Ensure there are at least two team cells for home/away
     if len(team_cells) < 2: 
         return {}
     teams = [team_cells[0].get_text(strip=True), team_cells[1].get_text(strip=True)]
@@ -99,7 +98,6 @@ def parse_team_basic_stats(div: Tag) -> Dict[str, Dict[str, Any]]:
             if not current_stat or len(tds) < 2:
                 continue
 
-            # Parse values for home and away teams
             result[teams[0]][current_stat] = _parse_stat_value(tds[0], current_stat)
             result[teams[1]][current_stat] = _parse_stat_value(tds[1], current_stat)
 
@@ -119,10 +117,8 @@ def parse_team_extra_stats(extra_div: Tag) -> Dict[str, Dict[str, Any]]:
         result.setdefault(team1, {})
         result.setdefault(team2, {})
 
-        # Find all data cells, excluding the header cells (div.th)
         data_cells = [d.get_text(' ', strip=True) for d in block.find_all('div') if 'th' not in d.get('class', [])]
 
-        # Iterate through the cells in groups of 3 (val1, stat_name, val2)
         for i in range(0, len(data_cells), 3):
             if i + 2 >= len(data_cells):
                 break
@@ -131,15 +127,15 @@ def parse_team_extra_stats(extra_div: Tag) -> Dict[str, Dict[str, Any]]:
             def _convert_to_number(s: str) -> Optional[Any]:
                 if not s:
                     return None
-                s = s.split()[0]  # Take only the first part if there are units
+                s = s.split()[0]  
                 s = s.replace(',', '')
                 try:
                     return int(s)
                 except ValueError:
                     try:
-                        return float(s) # Handle float values like percentages
+                        return float(s) 
                     except ValueError:
-                        return s # Return string if not a number
+                        return s 
 
             result[team1][stat_name] = _convert_to_number(val1_str)
             result[team2][stat_name] = _convert_to_number(val2_str)
@@ -194,7 +190,6 @@ def get_match_stats(soup: BeautifulSoup) -> Dict[str, Any]:
     stats = parse_team_basic_stats(basic_stats_div) if basic_stats_div else {}
     extra_stats = parse_team_extra_stats(extra_stats_div) if extra_stats_div else {}
 
-    # Merge stats, prioritizing extra_stats if there are overlaps
     all_stats: Dict[str, Dict[str, Any]] = {}
     for team in set(stats.keys()) | set(extra_stats.keys()):
         all_stats[team] = {
@@ -215,24 +210,22 @@ def get_match_events(soup: BeautifulSoup, home_team: str, away_team: str)  -> Di
 
         if EVENT_HEADER_CLASS in classes:
             header_text = div.get_text(strip=True)
-            current_header = MATCH_EVENT_HEADERS.get(header_text, header_text) # Use mapping for headers
+            current_header = MATCH_EVENT_HEADERS.get(header_text, header_text) 
             result[current_header] = []
         else:
             if current_header is None:
-                continue # Skip events before the first header
+                continue 
 
             event_data = parse_event(div)
             if event_data:
                 event_data['team'] = home_team if EVENT_A_CLASS in classes else away_team
 
-                # Special handling for 'Penalty' events (no time usually)
                 if current_header == MATCH_EVENT_HEADERS['Penalty Shootout'] and 'time' in event_data:
                     del event_data['time']
                 result[current_header].append(event_data)
 
     return result
 
-# --- Helper functions for get_match_info ---
 def _normalize_text(s: str) -> str:
     """Normalizes Unicode text."""
     return unicodedata.normalize('NFKC', s).strip()
@@ -273,7 +266,7 @@ def _parse_metadata_block(meta_block: Tag, match_info: Dict[str, Any]) -> None:
     """Parses the main metadata block (date, time, competition, attendance, venue, officials)."""
     rows = meta_block.find_all("div")
     
-    # Adjust for cases where attendance might be missing (insert a placeholder None)
+    # Adjust for cases where attendance might be missing
     if len(rows) == 6: 
         rows.insert(4, None) 
 
@@ -301,8 +294,8 @@ def _parse_metadata_block(meta_block: Tag, match_info: Dict[str, Any]) -> None:
     # Attendance
     if len(rows) > 4 and rows[4]:
         attendance_text = _normalize_text(rows[4].get_text()).split(":")[-1].replace(",", "")
-        if attendance_text.isdigit():
-            match_info["attendance"] = int(attendance_text)
+        # if attendance_text.isdigit():
+        match_info["attendance"] = int(attendance_text)
 
     # Venue (stadium & city)
     if len(rows) > 5 and rows[5]:
