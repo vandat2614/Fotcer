@@ -1,8 +1,8 @@
 update:
-  country: False
-  club: False
+  country: True
+  club: True
   competition: True
-  history: False
+  history: True
   fixture: True
   
 club: countries.csv
