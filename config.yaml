@@ -1,21 +1,10 @@
 update:
-  country: True
-  club: True
+  country: False
+  club: False
   competition: True
-  history: True
+  history: False
   fixture: True
-
-country:
-  governing: []       
-  country: []
   
-club:
-  governing: ['UEFA']
-  country: []
-  club: []
-
-competition:
-  domestic: ['Domestic Cups', 'Domestic Leagues - 1st Tier']
-  governing: ['UEFA', 'FIFA']
-  country : ['Spain', 'Portugal', 'Netherlands', 'Italy', 'Germany', 'France', 'England', 'Turkey']
-  national : ['FIFA World Cup', 'UEFA Nations League', 'UEFA European Football Championship']
+club: countries.csv
+country: countries.csv
+competition: competitions.csv

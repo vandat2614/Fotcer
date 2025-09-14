@@ -42,40 +42,41 @@ def load_config(config_path: str) -> dict[str, Any]:
     except yaml.YAMLError as e:
         raise ValueError(f"Error parsing YAML configuration: {e}")
     
-def report_country_stats(governing_body: str, total_countries: int, filtered_countries: List[str]) -> None:
+def report_country_stats(enable_countries : pd.DataFrame) -> None:
     """Prints statistics for country filtering."""
-    indent_print(f'\n[{governing_body}] {len(filtered_countries)} teams passed the filter out of {total_countries} total teams', indent_level=1)
-    if filtered_countries:
-        indent_print('- Include: ' + ', '.join(filtered_countries), indent_level=2)
+    grouped = enable_countries.groupby('Governing Body')['Country'].apply(list)
+
+    for governing_body, countries in grouped.items():
+        indent_print(f"\n[{governing_body}], add {len(countries)} teams", indent_level=1)
+        if countries:
+            indent_print("- Include: " + ", ".join(countries), indent_level=2)
 
 def report_club_stats(country: str, total_clubs: int, filtered_clubs: List[str]) -> None:
     """Prints statistics for club filtering."""
-    indent_print(f'- {country}: {len(filtered_clubs)} clubs passed the filter out of {total_clubs} total clubs', indent_level=2)
+    indent_print(f'- {country}: add {len(filtered_clubs)} clubs in total {total_clubs} clubs', indent_level=2)
     if filtered_clubs:
         indent_print('+ Include: ' + ', '.join(filtered_clubs) + '\n', indent_level=3)
 
-def report_competition_stats(filtered_competitions_df: pd.DataFrame, comp_filter_config: Dict[str, Any]) -> None:
+def report_competition_stats(enable_competitions: Dict[str, Any]) -> None:
     """
     Prints statistics for competition filtering, grouped by type (Domestic, Club International, National)
     and then by Country or Governing Body.
     """
 
-    indent_print(f'\nTotal competitions processed: {len(filtered_competitions_df)}', indent_level=1)
+    indent_print(f'\nTotal competitions processed: {len(enable_competitions)}', indent_level=1)
 
-    allowed_domestic_categories = comp_filter_config.get('domestic', [])
-    allowed_national_comp_names = comp_filter_config.get('national', [])
+    domestic_comps = enable_competitions[
+        enable_competitions['Category'].str.contains('Domestic')
+    ]
 
-    domestic_comps = filtered_competitions_df[
-        filtered_competitions_df['Category'].isin(allowed_domestic_categories)
-    ].copy()
     if not domestic_comps.empty:
         indent_print('\n[DOMESTIC]', indent_level=1)
         for country, group in domestic_comps.groupby("Country"):
             comps = ", ".join(group["Competition Name"].tolist())
             indent_print(f"- Add ({comps}) from {country}", indent_level=2)
 
-    club_international_comps = filtered_competitions_df[
-        filtered_competitions_df['Category'] == 'Club International Cups'
+    club_international_comps = enable_competitions[
+        enable_competitions['Category'] == 'Club International Cups'
     ].copy()
 
     if not club_international_comps.empty:
@@ -84,8 +85,8 @@ def report_competition_stats(filtered_competitions_df: pd.DataFrame, comp_filter
             comps = ", ".join(group["Competition Name"].tolist())
             indent_print(f"- Add ({comps}) from {gov}", indent_level=2)
 
-    national_team_comps = filtered_competitions_df[
-        filtered_competitions_df['Competition Name'].isin(allowed_national_comp_names)
+    national_team_comps = enable_competitions[
+        enable_competitions['Category'].str.contains('National')
     ].copy()
 
     if not national_team_comps.empty:
@@ -93,3 +94,44 @@ def report_competition_stats(filtered_competitions_df: pd.DataFrame, comp_filter
         for gov, group in national_team_comps.groupby("Governing Body"): 
             comps = ", ".join(group["Competition Name"].tolist())
             indent_print(f"- Add ({comps}) from {gov}", indent_level=2)
+
+
+# def report_competition_stats(filtered_competitions_df: pd.DataFrame, comp_filter_config: Dict[str, Any]) -> None:
+#     """
+#     Prints statistics for competition filtering, grouped by type (Domestic, Club International, National)
+#     and then by Country or Governing Body.
+#     """
+
+#     indent_print(f'\nTotal competitions processed: {len(filtered_competitions_df)}', indent_level=1)
+
+#     allowed_domestic_categories = comp_filter_config.get('domestic', [])
+#     allowed_national_comp_names = comp_filter_config.get('national', [])
+
+#     domestic_comps = filtered_competitions_df[
+#         filtered_competitions_df['Category'].isin(allowed_domestic_categories)
+#     ].copy()
+#     if not domestic_comps.empty:
+#         indent_print('\n[DOMESTIC]', indent_level=1)
+#         for country, group in domestic_comps.groupby("Country"):
+#             comps = ", ".join(group["Competition Name"].tolist())
+#             indent_print(f"- Add ({comps}) from {country}", indent_level=2)
+
+#     club_international_comps = filtered_competitions_df[
+#         filtered_competitions_df['Category'] == 'Club International Cups'
+#     ].copy()
+
+#     if not club_international_comps.empty:
+#         indent_print('\n[CLUB INTERNATIONAL]', indent_level=1)
+#         for gov, group in club_international_comps.groupby("Governing Body"): 
+#             comps = ", ".join(group["Competition Name"].tolist())
+#             indent_print(f"- Add ({comps}) from {gov}", indent_level=2)
+
+#     national_team_comps = filtered_competitions_df[
+#         filtered_competitions_df['Competition Name'].isin(allowed_national_comp_names)
+#     ].copy()
+
+#     if not national_team_comps.empty:
+#         indent_print('\n[NATIONAL]', indent_level=1)
+#         for gov, group in national_team_comps.groupby("Governing Body"): 
+#             comps = ", ".join(group["Competition Name"].tolist())
+#             indent_print(f"- Add ({comps}) from {gov}", indent_level=2)

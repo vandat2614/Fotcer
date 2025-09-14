@@ -38,13 +38,13 @@ def _fetch(url: str) -> Tuple[List[pd.DataFrame], BeautifulSoup, List[Tag]]: # T
         return tables, soup, tables_html_tags # Trả về cả soup và tables_html_tags
 
     except urllib.error.URLError as e:
-        print(f"URL Error for {url}: {e.reason}")
+        # print(f"URL Error for {url}: {e.reason}")
         raise
     except pd.errors.ParserError as e:
-        print(f"Pandas HTML parsing error for {url}: {e}")
+        # print(f"Pandas HTML parsing error for {url}: {e}")
         raise
     except Exception as e:
-        print(f"An unexpected error occurred while fetching {url}: {e}")
+        # print(f"An unexpected error occurred while fetching {url}: {e}")
         raise
 
 def fetch_country() -> pd.DataFrame:
@@ -182,28 +182,59 @@ def fetch_competitions() -> pd.DataFrame:
     
     return pd.concat(clean_tables, ignore_index=True)
 
-def fetch_history(comp_index: str) -> pd.DataFrame: # Kiểu trả về là DataFrame
+def split_champion_column(table: pd.DataFrame) -> pd.DataFrame:
+    """Splits the 'Champion' column into two columns 'Champion' and 'Point'
+    """
+    split_data = table['Champion'].str.rsplit('-', n=1, expand=True)
+
+    table['Champion'] = split_data[0].str.strip()
+    table['Points'] = pd.to_numeric(split_data[1].str.strip(), errors='coerce')
+
+    table[['Champion', 'Points']] = table[['Champion', 'Points']].fillna("Season not finished yet")
+    return table
+
+def fetch_history(comp_index: str, category: str) -> pd.DataFrame: # Kiểu trả về là DataFrame
     """Fetches the historical data for a specific competition."""
 
     url = f"{FBREF_BASE_URL}/en/comps/{comp_index}/history"
     tables, soup, tables_html_tags = _fetch(url) 
     
     table = clean_table(tables[0])
+
+    if '# Squads' not in table.columns: # super cup
+        table = add_match_code(table, tables_html_tags[0])
+
+    if "Domestic Leagues" in category:
+        table = split_champion_column(table)
+    else:
+        if category == 'National Team Competitions':
+            table['Champion'] = table['Champion'].str.split(' ', n=1).str[1]
+            table['Runner-Up'] = table['Runner-Up'].str.split(' ', n=1).str[1]
+        table[['Champion', 'Runner-Up']] = table[['Champion', 'Runner-Up']].fillna("Season not finished yet")
+
     
     drop_columns = []
-    if 'Final' in table.columns: drop_columns.append('Final')
     if 'Top Scorer' in table.columns: drop_columns.append('Top Scorer')
-
+    if 'Final' in table.columns: drop_columns.append('Final')
     table = table.drop(columns=drop_columns)
+
     if 'Year' in table.columns:
         table = table.rename(columns={'Year' : 'Season'})
     table['Season'] = table['Season'].astype(str)
 
+
     return table
 
-def fetch_fixture(comp_name, comp_index, season):
+def fetch_fixture(comp_name : str = None, comp_index : str = None, season : str = None, match_code : str = None):
+    if match_code:
+        url = f"{FBREF_BASE_URL}/en/matches/{match_code}"
+        tables, soup, tables_html_tags = _fetch(url) 
+
+        match_info = get_match_info(soup)
+        return match_info_to_df(match_info, match_code)
 
     url = f'{FBREF_BASE_URL}/en/comps/{comp_index}/{season}/schedule/{season}-{normalize_string_for_url(comp_name)}-Scores-and-Fixtures'
+    
     try:
         tables, soup, tables_html_tags = _fetch(url) 
     except:
@@ -213,3 +244,44 @@ def fetch_fixture(comp_name, comp_index, season):
     table = add_match_code(table, tables_html_tags[0])
 
     return process_fixture(table)
+
+def match_info_to_df(match_info: dict, match_code: str) -> pd.DataFrame:
+    """Convert match_info dict to a DataFrame with specific columns."""
+
+    date = match_info.get('datetime', {}).get('date')
+    time = match_info.get('datetime', {}).get('time')
+    
+    home_team = match_info.get('teams', {}).get('home', {}).get('name')
+    away_team = match_info.get('teams', {}).get('away', {}).get('name')
+    
+    attendance = match_info.get('attendance')
+    
+    venue_dict = match_info.get('venue', {})
+    venue = venue_dict.get('stadium')
+    
+    referee = match_info.get('officials', {}).get('main_referee', None)
+    notes = None
+    
+    home_score = match_info.get('scores', {}).get('home')
+    away_score = match_info.get('scores', {}).get('away')
+    
+    home_penalty = match_info.get('penalties', {}).get('home') if 'penalties' in match_info else None
+    away_penalty = match_info.get('penalties', {}).get('away') if 'penalties' in match_info else None
+    
+    row = {
+        "Date": date,
+        "Time": time,
+        "Home": home_team,
+        "Away": away_team,
+        "Attendance": attendance,
+        "Venue": venue,
+        "Referee": referee,
+        "Notes": notes,
+        "Match Code": match_code,
+        "Home Score": home_score,
+        "Away Score": away_score,
+        "Home Penalty": home_penalty,
+        "Away Penalty": away_penalty
+    }
+    
+    return pd.DataFrame([row])

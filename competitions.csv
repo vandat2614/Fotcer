@@ -1,0 +1,151 @@
+Competition Name,Gender,First Season,Last Season,Category,Competition Index,Format,Governing Body,Country,Enable
+FIFA Club World Cup,M,2019,2025,Club International Cups,719,Cup,FIFA,,True
+Leagues Cup,M,2023,2025,Club International Cups,939,Cup,CONCACAF,,False
+Copa Libertadores de América,M,2014,2025,Club International Cups,14,Cup,CONMEBOL,,False
+Copa CONMEBOL Sudamericana,M,2014,2025,Club International Cups,205,Cup,CONMEBOL,,False
+UEFA Champions League,M,1990-1991,2025-2026,Club International Cups,8,Cup,UEFA,,True
+UEFA Europa League,M,1990-1991,2025-2026,Club International Cups,19,Cup,UEFA,,True
+UEFA Conference League,M,2021-2022,2025-2026,Club International Cups,882,Cup,UEFA,,True
+UEFA Super Cup,M,2000,2025,Club International Cups,122,Cup,UEFA,,True
+UEFA Women's Champions League,F,2014-2015,2025-2026,Club International Cups,181,Cup,UEFA,,False
+FIFA World Cup,M,1930,2026,National Team Competitions,1,Cup,FIFA,,True
+FIFA Confederations Cup,M,2001,2017,National Team Competitions,666,Cup,FIFA,,False
+International Friendlies (M),M,2014,2025,National Team Competitions,218,Cup,FIFA,,False
+FIFA Women's World Cup,F,1991,2023,National Team Competitions,106,Cup,FIFA,,False
+Olympics — Women's Tournament,F,1996,2024,National Team Competitions,180,Cup,FIFA,,False
+Algarve Cup,F,2019,2022,National Team Competitions,214,Cup,FIFA,,False
+International Friendlies (W),F,2019,2025,National Team Competitions,217,Cup,FIFA,,False
+SheBelieves Cup,F,2016,2024,National Team Competitions,212,Cup,FIFA,,False
+Africa Cup of Nations,M,2010,2024,National Team Competitions,656,Cup,CAF,,False
+Africa Women Cup of Nations,F,2016,2025,National Team Competitions,156,Cup,CAF,,False
+CONCACAF Gold Cup,M,2015,2025,National Team Competitions,681,Cup,CONCACAF,,False
+CONCACAF W Championship,F,2014,2022,National Team Competitions,157,Cup,CONCACAF,,False
+CONMEBOL Copa América,M,2015,2024,National Team Competitions,685,Cup,CONMEBOL,,False
+Copa América Femenina,F,2018,2025,National Team Competitions,158,Cup,CONMEBOL,,False
+OFC Nations Cup,M,2007-2008,2024,National Team Competitions,257,Cup,OFC,,False
+OFC Women's Nations Cup,F,2018,2025,National Team Competitions,159,Cup,OFC,,False
+UEFA European Football Championship,M,2000,2024,National Team Competitions,676,Cup,UEFA,,True
+UEFA Nations League,M,2018-2019,2024-2025,National Team Competitions,677,Cup,UEFA,,True
+UEFA Women's Championship,F,2001,2025,National Team Competitions,162,Cup,UEFA,,False
+AFC Asian Cup,M,2000,2024,National Team Competitions,664,Cup,AFC,,False
+AFC Women's Asian Cup,F,2014,2022,National Team Competitions,161,Cup,AFC,,False
+Liga Profesional de Fútbol Argentina,M,2014,2025,Domestic Leagues - 1st Tier,21,League,,Argentina,False
+A-League Men,M,2005-2006,2025-2026,Domestic Leagues - 1st Tier,65,League,,Australia,False
+A-League Women,F,2018-2019,2024-2025,Domestic Leagues - 1st Tier,196,League,,Australia,False
+Austrian Football Bundesliga,M,2003-2004,2025-2026,Domestic Leagues - 1st Tier,56,League,,Austria,False
+ÖFB Frauen-Bundesliga,F,2020-2021,2025-2026,Domestic Leagues - 1st Tier,286,League,,Austria,False
+Belgian Pro League,M,2003-2004,2025-2026,Domestic Leagues - 1st Tier,37,League,,Belgium,False
+Belgian Women's Super League,F,2020-2021,2024-2025,Domestic Leagues - 1st Tier,296,League,,Belgium,False
+División de Fútbol Profesional,M,2014-2015,2025,Domestic Leagues - 1st Tier,74,League,,Bolivia,False
+Campeonato Brasileiro Série A,M,2014,2025,Domestic Leagues - 1st Tier,24,League,,Brazil,False
+Brasileirão Feminino Série A1,F,2019,2025,Domestic Leagues - 1st Tier,206,League,,Brazil,False
+First Professional Football League,M,2009-2010,2025-2026,Domestic Leagues - 1st Tier,67,League,,Bulgaria,False
+Canadian Premier League,M,2019,2025,Domestic Leagues - 1st Tier,211,League,,Canada,False
+Chilean Primera División,M,2014-2015,2025,Domestic Leagues - 1st Tier,35,League,,Chile,False
+Chinese Football Association Super League,M,2014,2025,Domestic Leagues - 1st Tier,62,League,,China,False
+Categoría Primera A,M,2014,2025,Domestic Leagues - 1st Tier,41,League,,Colombia,False
+Croatian Football League,M,2007-2008,2025-2026,Domestic Leagues - 1st Tier,63,League,,Croatia,False
+Czech First League,M,2009-2010,2025-2026,Domestic Leagues - 1st Tier,66,League,,Czech Republic,False
+Danish Superliga,M,2003-2004,2025-2026,Domestic Leagues - 1st Tier,50,League,,Denmark,False
+A-Liga,F,2019-2020,2025-2026,Domestic Leagues - 1st Tier,340,League,,Denmark,False
+Liga Profesional Ecuador,M,2014,2025,Domestic Leagues - 1st Tier,58,League,,Ecuador,False
+Premier League,M,1888-1889,2025-2026,Domestic Leagues - 1st Tier,9,League,,England,True
+FA Women's Super League,F,2017,2025-2026,Domestic Leagues - 1st Tier,189,League,,England,False
+La Liga,M,1988-1989,2025-2026,Domestic Leagues - 1st Tier,12,League,,Spain,True
+Liga F,F,2022-2023,2025-2026,Domestic Leagues - 1st Tier,230,League,,Spain,False
+Veikkausliiga,M,2003,2025,Domestic Leagues - 1st Tier,43,League,,Finland,False
+Ligue 1,M,1995-1996,2025-2026,Domestic Leagues - 1st Tier,13,League,,France,True
+Première Ligue,F,2017-2018,2025-2026,Domestic Leagues - 1st Tier,193,League,,France,False
+Fußball-Bundesliga,M,1988-1989,2025-2026,Domestic Leagues - 1st Tier,20,League,,Germany,True
+Frauen-Bundesliga,F,2016-2017,2025-2026,Domestic Leagues - 1st Tier,183,League,,Germany,False
+Super League Greece,M,2000-2001,2025-2026,Domestic Leagues - 1st Tier,27,League,,Greece,False
+Nemzeti Bajnokság I,M,2005-2006,2025-2026,Domestic Leagues - 1st Tier,46,League,,Hungary,False
+Indian Super League,M,2014,2024-2025,Domestic Leagues - 1st Tier,82,League,,India,False
+Persian Gulf Pro League,M,2014-2015,2025-2026,Domestic Leagues - 1st Tier,64,League,,Iran,False
+Serie A,M,1988-1989,2025-2026,Domestic Leagues - 1st Tier,11,League,,Italy,True
+Serie A,F,2018-2019,2025-2026,Domestic Leagues - 1st Tier,208,League,,Italy,True
+J1 League,M,2014,2025,Domestic Leagues - 1st Tier,25,League,,Japan,False
+Women Empowerment League,F,2021-2022,2025-2026,Domestic Leagues - 1st Tier,893,League,,Japan,False
+K League 1,M,2014,2025,Domestic Leagues - 1st Tier,55,League,,South Korea,False
+Saudi Pro League,M,2014-2015,2025-2026,Domestic Leagues - 1st Tier,70,League,,Saudi Arabia,False
+Liga MX,M,2003-2004,2025-2026,Domestic Leagues - 1st Tier,31,League,,Mexico,False
+Eredivisie,M,2000-2001,2025-2026,Domestic Leagues - 1st Tier,23,League,,Netherlands,True
+Eredivisie Vrouwen,F,2018-2019,2025-2026,Domestic Leagues - 1st Tier,195,League,,Netherlands,False
+Eliteserien,M,2000,2025,Domestic Leagues - 1st Tier,28,League,,Norway,False
+Toppserien,F,2017,2025,Domestic Leagues - 1st Tier,185,League,,Norway,False
+Paraguayan Primera División,M,2014,2025,Domestic Leagues - 1st Tier,61,League,,Paraguay,False
+Liga 1 de Fútbol Profesional,M,2014,2025,Domestic Leagues - 1st Tier,44,League,,Peru,False
+Ekstraklasa,M,2002-2003,2025-2026,Domestic Leagues - 1st Tier,36,League,,Poland,False
+Primeira Liga,M,2000-2001,2025-2026,Domestic Leagues - 1st Tier,32,League,,Portugal,True
+Liga I,M,2006-2007,2025-2026,Domestic Leagues - 1st Tier,47,League,,Romania,False
+South African Premiership,M,2014-2015,2025-2026,Domestic Leagues - 1st Tier,52,League,,South Africa,False
+Russian Premier League,M,2001,2025-2026,Domestic Leagues - 1st Tier,30,League,,Russia,False
+Scottish Premiership,M,2000-2001,2025-2026,Domestic Leagues - 1st Tier,40,League,,Scotland,False
+Serbian SuperLiga,M,2008-2009,2025-2026,Domestic Leagues - 1st Tier,54,League,,Serbia,False
+Swiss Super League,M,2003-2004,2025-2026,Domestic Leagues - 1st Tier,57,League,,Switzerland,False
+Swiss Women's Super League,F,2021-2022,2025-2026,Domestic Leagues - 1st Tier,894,League,,Switzerland,False
+Allsvenskan,M,2001,2025,Domestic Leagues - 1st Tier,29,League,,Sweden,False
+Damallsvenskan,F,2017,2025,Domestic Leagues - 1st Tier,187,League,,Sweden,False
+Süper Lig,M,2001-2002,2025-2026,Domestic Leagues - 1st Tier,26,League,,Turkey,False
+Ukrainian Premier League,M,2003-2004,2025-2026,Domestic Leagues - 1st Tier,39,League,,Ukraine,False
+Uruguayan Primera División,M,2014-2015,2025,Domestic Leagues - 1st Tier,45,League,,Uruguay,False
+Major League Soccer,M,1996,2025,Domestic Leagues - 1st Tier,22,League,,United States,False
+National Women's Soccer League,F,2013,2025,Domestic Leagues - 1st Tier,182,League,,United States,False
+Women's Professional Soccer,F,2009,2011,Domestic Leagues - 1st Tier,878,League,,United States,False
+Women's United Soccer Association,F,2001,2003,Domestic Leagues - 1st Tier,877,League,,United States,False
+Venezuelan Primera División,M,2014-2015,2025,Domestic Leagues - 1st Tier,105,League,,Venezuela,False
+Challenger Pro League,M,2014-2015,2025-2026,Domestic Leagues - 2nd Tier,69,League,,Belgium,False
+Campeonato Brasileiro Série B,M,2014,2025,Domestic Leagues - 2nd Tier,38,League,,Brazil,False
+EFL Championship,M,2001-2002,2025-2026,Domestic Leagues - 2nd Tier,10,League,,England,False
+Spanish Segunda División,M,2001-2002,2025-2026,Domestic Leagues - 2nd Tier,17,League,,Spain,False
+Ligue 2,M,2009-2010,2025-2026,Domestic Leagues - 2nd Tier,60,League,,France,False
+2. Fußball-Bundesliga,M,2003-2004,2025-2026,Domestic Leagues - 2nd Tier,33,League,,Germany,False
+I-League,M,2013-2014,2024-2025,Domestic Leagues - 2nd Tier,378,League,,India,False
+Serie B,M,2001-2002,2025-2026,Domestic Leagues - 2nd Tier,18,League,,Italy,False
+J2 League,M,2014,2025,Domestic Leagues - 2nd Tier,49,League,,Japan,False
+Eerste Divisie,M,2007-2008,2025-2026,Domestic Leagues - 2nd Tier,51,League,,Netherlands,False
+Scottish Championship,M,2007-2008,2025-2026,Domestic Leagues - 2nd Tier,72,League,,Scotland,False
+Superettan,M,2006,2025,Domestic Leagues - 2nd Tier,48,League,,Sweden,False
+North American Soccer League,M,2011,2017,Domestic Leagues - 2nd Tier,76,League,,United States,False
+USL Championship,M,2011,2025,Domestic Leagues - 2nd Tier,73,League,,United States,False
+USL First Division,M,2004,2009,Domestic Leagues - 2nd Tier,68,League,,United States,False
+USSF Division 2 Professional League,M,2010,2010,Domestic Leagues - 2nd Tier,79,League,,United States,False
+EFL League One,M,2002-2003,2025-2026,Domestic Leagues - 3rd Tier and Lower,15,League,,England,False
+EFL League Two,M,2002-2003,2025-2026,Domestic Leagues - 3rd Tier and Lower,16,League,,England,False
+National League,M,2006-2007,2025-2026,Domestic Leagues - 3rd Tier and Lower,34,League,,England,False
+3. Fußball-Liga,M,2009-2010,2025-2026,Domestic Leagues - 3rd Tier and Lower,59,League,,Germany,False
+USL League One,M,2020,2025,Domestic Leagues - 3rd Tier and Lower,137,League,,United States,False
+FIFA World Cup Qualification — Inter-confederation play-offs,M,2022,2022,National Team Qualification,255,Cup,FIFA,,False
+Africa Cup of Nations qualification,M,2015,2025,National Team Qualification,657,Cup,CAF,,False
+FIFA World Cup Qualification — CAF,M,2002,2026,National Team Qualification,2,Cup,CAF,,False
+FIFA World Cup Qualification — CONCACAF,M,1998,2026,National Team Qualification,3,Cup,CONCACAF,,False
+FIFA World Cup Qualification — CONMEBOL,M,2002,2026,National Team Qualification,4,Cup,CONMEBOL,,False
+FIFA World Cup Qualification — OFC,M,2014,2026,National Team Qualification,5,Cup,OFC,,False
+FIFA World Cup Qualification — UEFA,M,1998,2026,National Team Qualification,6,Cup,UEFA,,False
+UEFA European Football Championship Qualifying,M,2008,2024,National Team Qualification,678,Cup,UEFA,,False
+FIFA Women's World Cup Qualification (UEFA),F,2019,2023,National Team Qualification,160,Cup,UEFA,,False
+UEFA Women's Euro Qualification,F,2017,2025,National Team Qualification,675,Cup,UEFA,,False
+AFC Asian Cup qualification,M,2000,2023,National Team Qualification,665,Cup,AFC,,False
+FIFA World Cup Qualification — AFC,M,2002,2026,National Team Qualification,7,Cup,AFC,,False
+AFC Women's Asian Cup qualification,F,2018,2026,National Team Qualification,662,Cup,AFC,,False
+Copa de la Liga Profesional,M,2021,2024,Domestic Cups,905,Cup,,Argentina,False
+EFL Cup,M,2014-2015,2025-2026,Domestic Cups,690,Cup,,England,True
+FA Community Shield,M,2015,2025,Domestic Cups,602,Cup,,England,True
+FA Cup,M,2014-2015,2025-2026,Domestic Cups,514,Cup,,England,True
+Copa del Rey,M,2014-2015,2024-2025,Domestic Cups,569,Cup,,Spain,True
+Supercopa de España,M,2015,2025,Domestic Cups,646,Cup,,Spain,True
+Coupe de France,M,2014-2015,2024-2025,Domestic Cups,518,Cup,,France,True
+Trophée des Champions,M,2014,2025,Domestic Cups,604,Cup,,France,True
+Coupe de la Ligue,M,2014-2015,2019-2020,Domestic Cups,693,Cup,,France,True
+DFB-Pokal,M,2014-2015,2025-2026,Domestic Cups,521,Cup,,Germany,True
+Franz Beckenbauer Supercup,M,2014,2025,Domestic Cups,606,Cup,,Germany,True
+DFB-Pokal Frauen,F,2019-2020,2025-2026,Domestic Cups,520,Cup,,Germany,False
+Coppa Italia,M,2014-2015,2025-2026,Domestic Cups,529,Cup,,Italy,True
+Supercoppa Italiana,M,2014,2025,Domestic Cups,612,Cup,,Italy,True
+Lamar Hunt U.S. Open Cup,M,2019,2025,Domestic Cups,577,Cup,,United States,False
+NWSL Challenge Cup,F,2020,2024,Domestic Cups,881,Cup,,United States,False
+NWSL Fall Series,F,2020,2020,Domestic Cups,884,Cup,,United States,False
+Premier League 2,M,2016-2017,2025-2026,Domestic Youth Leagues,852,League,,England,False
+Premier League 2 — Division 2,M,2016-2017,2022-2023,Domestic Youth Leagues,853,League,,England,False
+U17 DFB Youth League,M,2016-2017,2025-2026,Domestic Youth Leagues,851,League,,Germany,False
+U19 DFB Youth League,M,2015-2016,2025-2026,Domestic Youth Leagues,850,League,,Germany,False

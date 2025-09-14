@@ -9,7 +9,7 @@ from src.constants import (
     MATCH_EVENT_HEADERS, 
     OFFICIALS_ROLE_MAPPING,
     EVENT_ICON_CLASS, YELLOW_CARD_CLASS, RED_CARD_CLASS,
-    TEAM_LOGO_CLASS, SCORE_CLASS, DATAPOINT_CLASS, SCOREBOX_META_CLASS, VENUETIME_CLASS,
+    TEAM_LOGO_CLASS, SCORE_CLASS, SCORE_PENALTY_CLASS, SCORE_AGGREGATE_CLASS, DATAPOINT_CLASS, SCOREBOX_META_CLASS, VENUETIME_CLASS,
     LINEUP_CLASS, EVENT_HEADER_CLASS, EVENT_A_CLASS, EVENT_B_CLASS
 )
 
@@ -244,14 +244,18 @@ def _parse_teams_and_logos(soup: BeautifulSoup, match_info: Dict[str, Any]) -> N
         team_name = _normalize_text(div.get("alt", "")).rsplit(maxsplit=2)[0]
         team_logo = div.get("src")
         side = "home" if i == 0 else "away"
-        match_info["teams"][side] = {"team_name": team_name, "logo_url": team_logo}
+        match_info["teams"][side] = {"name": team_name, "logo_url": team_logo}
 
 def _parse_scores(soup: BeautifulSoup, match_info: Dict[str, Any]) -> None:
     """Parses match scores."""
-    score_divs = soup.find_all("div", class_=SCORE_CLASS)
-    scores = [int(div.get_text()) for div in score_divs if div.get_text().isdigit()]
-    if len(scores) == 2:
-        match_info["scores"] = {"home": scores[0], "away": scores[1]}
+
+    mapping = {SCORE_CLASS : 'scores', SCORE_AGGREGATE_CLASS : 'aggregate', SCORE_PENALTY_CLASS : 'penalties'}
+    for cls in mapping.keys():
+        score_divs = soup.find_all("div", class_=cls)
+        scores = [int(div.get_text()) for div in score_divs if div.get_text().isdigit()]
+        if len(scores) == 2:
+            name = mapping[cls]
+            match_info[name] = {"home": scores[0], "away": scores[1]}
 
 def _parse_managers_and_captains(soup: BeautifulSoup, match_info: Dict[str, Any]) -> None:
     """Parses managers and captains for both teams."""
@@ -262,7 +266,7 @@ def _parse_managers_and_captains(soup: BeautifulSoup, match_info: Dict[str, Any]
             continue
         label, value = [part.strip() for part in text.split(":", 1)]
         role = label.lower()
-        side = "home" if i == 0 else "away"
+        side = "home" if i <= 1 else "away"
         match_info["teams"].setdefault(side, {})[role] = value
 
 def _parse_metadata_block(meta_block: Tag, match_info: Dict[str, Any]) -> None:
@@ -328,7 +332,9 @@ def get_match_info(soup: BeautifulSoup) -> Dict[str, Any]:
     """
     match_info = {
         "teams": {},
-        "scores": {},
+        "scores": {"home" : None, "away" : None},
+        "aggregate": {"home" : None, "away" : None},
+        "penalties": {"home" : None, "away" : None},
         "competition": {},
         "officials": {},
         "datetime": {},

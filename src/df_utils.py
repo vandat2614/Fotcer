@@ -41,24 +41,40 @@ def add_match_code(
         table: pd.DataFrame, 
         html_tag: Tag # Đổi từ BeautifulSoup sang Tag
     ) -> pd.DataFrame:
-    """
-    Adds 'Match Code' and updates 'Notes' column in a DataFrame based on HTML links.
-    """
+    """Adds 'Match Code' and updates 'Notes' column in a DataFrame based on HTML links."""
+
     pattern = r'^/en/matches/([a-z0-9]+)/(.+)$'
     hrefs = extract_hrefs(html_tag, pattern)
     match_codes = [href.split('/')[3] for href in hrefs]
-    
+
     # Match_codes are duplicated for some reason 
-    match_codes = [match_codes[i] for i in range(0, len(match_codes), 2)] 
+    # match_codes = [match_codes[i] for i in range(0, len(match_codes), 2)] 
+    match_codes = list(dict.fromkeys(match_codes))
 
-    table['Match Code'] = None  
-    mask = table['Match Report'] == 'Match Report'
-    table.loc[mask, 'Match Code'] = match_codes[:mask.sum()]
+    column_name = None
+    if 'Match Report' in table.columns:
+        column_name = 'Match Report'
+    elif 'Final' in table.columns:
+        column_name = 'Final'
 
-    table['Notes'] = table['Notes'].astype('string')
-    table.loc[table['Match Code'].isna(), 'Notes'] = 'Not yet played'
+    if column_name is not None:
+        table['Match Code'] = None  
+        mask = table[column_name] == 'Match Report'
+        table.loc[mask, 'Match Code'] = match_codes[:mask.sum()]
+        table = table.drop(columns=column_name)
 
-    return table.drop(columns='Match Report')
+    if match_codes:
+        first_match_idx = table.index[table['Match Code'].notna()][0]
+
+        mask_above = table.index < first_match_idx
+        table.loc[mask_above & table['Match Code'].isna(), 'Match Code'] = "Not yet played"
+
+        mask_below = table.index > first_match_idx
+        table.loc[mask_below & table['Match Code'].isna(), 'Match Code'] = "No data available"
+    else:
+        table['Match Code'] = "Not yet played"
+
+    return table
 
 def filter_countries(countries_df: pd.DataFrame, country_filter_config: Dict[str, Any]) -> pd.DataFrame:
     """Filters country DataFrame based on provided configuration."""
