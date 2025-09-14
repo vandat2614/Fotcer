@@ -49,7 +49,6 @@
 
 
 from src.fetchers import fetch_competitions, fetch_history, fetch_fixture
-from src.df_utils import filter_competitions
 from src.utils import report_competition_stats
 from src.database_builder import build_database
 
