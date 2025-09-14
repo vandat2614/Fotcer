@@ -159,13 +159,21 @@ class DatabaseManager:
             conn.commit()
 
     def initialize_team_data(self) -> None:
+        """Load team data (clubs + countries) if tables exist, else init empty."""
+        if not (self.is_table_existing("Club") and self.is_table_existing("Country")):
+            self._all_team_data = pd.DataFrame(columns=["code", "name"])
+            return
+
         clubs = self.get_all_club_names_with_codes()
         countries = self.get_all_country_names_with_codes()
 
-        self._all_team_data = pd.concat([clubs, countries], ignore_index=False)
-        self._all_team_data.to_csv('heh.csv')
+        if isinstance(clubs, Exception):
+            clubs = pd.DataFrame(columns=["code", "name"])
+        if isinstance(countries, Exception):
+            countries = pd.DataFrame(columns=["code", "name"])
 
-        self._all_team_display_names = [t["name"] for _, t in self._all_team_data.iterrows() if t.get("name")]
+        self._all_team_data = pd.concat([clubs, countries], ignore_index=True)
+
 
     def search_team(self, team_name: str, fuzzy_threshold: int = 90) -> Dict[str, Any]:
         """
