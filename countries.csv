@@ -1,36 +1,36 @@
 Country,Country Code,# Clubs,Governing Body,National Code,Enable Nation,Enable Club
 Afghanistan,AFG,0,AFC,2e28ea52,True,False
-Albania,ALB,17,UEFA,b44b9eb7,True,True
+Albania,ALB,17,UEFA,b44b9eb7,True,False
 Algeria,ALG,0,CAF,1e2dba57,True,False
 American Samoa,ASA,0,OFC,7cf9bd85,True,False
-Andorra,AND,11,UEFA,b29753f4,True,True
+Andorra,AND,11,UEFA,b29753f4,True,False
 Angola,ANG,0,CAF,ca8ead5b,True,False
 Anguilla,AIA,0,CONCACAF,f6472561,True,False
 Antigua and Barbuda,ATG,1,CONCACAF,78c13166,True,False
 Argentina,ARG,41,CONMEBOL,f9fddd6e,True,False
-Armenia,ARM,16,UEFA,95d6caec,True,True
+Armenia,ARM,16,UEFA,95d6caec,True,False
 Aruba,ARU,0,CONCACAF,824a1c5a,True,False
 Australia,AUS,24,AFC,b90bf4f9,True,False
-Austria,AUT,43,UEFA,d5121f10,True,True
-Azerbaijan,AZE,21,UEFA,d08da289,True,True
+Austria,AUT,43,UEFA,d5121f10,True,False
+Azerbaijan,AZE,21,UEFA,d08da289,True,False
 Bahamas,BAH,0,CONCACAF,cb85da3f,True,False
 Bahrain,BHR,0,AFC,393a75f3,True,False
 Bangladesh,BAN,0,AFC,73ccbede,True,False
 Barbados,BRB,0,CONCACAF,5e9f5812,True,False
-Belarus,BLR,18,UEFA,f6725d1c,True,True
-Belgium,BEL,69,UEFA,361422b9,True,True
+Belarus,BLR,18,UEFA,f6725d1c,True,False
+Belgium,BEL,69,UEFA,361422b9,True,False
 Belize,BLZ,0,CONCACAF,29fd8299,True,False
 Benin,BEN,0,CAF,d738fa07,True,False
 Bermuda,BER,0,CONCACAF,9cf961c4,True,False
 Bhutan,BHU,0,AFC,e71dc1ac,True,False
 Bolivia,BOL,31,CONMEBOL,1bd2760c,True,False
 Bonaire,BOE,0,CONCACAF,,False,False
-Bosnia and Herzegovina,BIH,18,UEFA,6c5ef1c3,True,True
+Bosnia and Herzegovina,BIH,18,UEFA,6c5ef1c3,True,False
 Botswana,BOT,0,CAF,efd75073,True,False
 Brazil,BRA,102,CONMEBOL,304635c3,True,False
 British Virgin Islands,VGB,0,CONCACAF,06e01375,True,False
 Brunei Darussalam,BRU,0,AFC,2fd8eea8,True,False
-Bulgaria,BUL,48,UEFA,06d209d4,True,True
+Bulgaria,BUL,48,UEFA,06d209d4,True,False
 Burkina Faso,BFA,0,CAF,a30fa613,True,False
 Burundi,BDI,0,CAF,8520a911,True,False
 Cambodia,CAM,0,AFC,54664ad7,True,False
@@ -51,13 +51,13 @@ Congo DR,COD,0,CAF,9be9f315,True,False
 Cook Islands,COK,0,OFC,890a06d7,True,False
 Costa Rica,CRC,0,CONCACAF,1ea5ab66,True,False
 Côte d'Ivoire,CIV,0,CAF,24772b12,True,False
-Croatia,CRO,27,UEFA,7b08e376,True,True
+Croatia,CRO,27,UEFA,7b08e376,True,False
 Cuba,CUB,0,CONCACAF,9038ec62,True,False
 Curaçao,CUW,0,CONCACAF,e0f5893a,True,False
-Cyprus,CYP,14,UEFA,5d77335a,True,True
-Czech Republic,CZE,35,UEFA,2740937c,True,True
+Cyprus,CYP,14,UEFA,5d77335a,True,False
+Czech Republic,CZE,35,UEFA,2740937c,True,False
 Czechoslovakia,TCH,0,FIFA,969248b8,True,False
-Denmark,DEN,43,UEFA,29a4e4af,True,True
+Denmark,DEN,43,UEFA,29a4e4af,True,False
 Djibouti,DJI,0,CAF,dd9fd50a,True,False
 Dominica,DMA,0,CONCACAF,77865072,True,False
 Dominican Republic,DOM,0,CONCACAF,fb6f8ac6,True,False
@@ -67,23 +67,23 @@ El Salvador,SLV,0,CONCACAF,fc3dbeaa,True,False
 England,ENG,1065,UEFA,1862c019,True,True
 Equatorial Guinea,EQG,0,CAF,710a764c,True,False
 Eritrea,ERI,0,CAF,3007dfec,True,False
-Estonia,EST,16,UEFA,a82f4aef,True,True
+Estonia,EST,16,UEFA,a82f4aef,True,False
 Eswatini,SWZ,0,CAF,de178d6f,True,False
 Ethiopia,ETH,0,CAF,6d1f3653,True,False
-Faroe Islands,FRO,15,UEFA,dcdf0349,True,True
+Faroe Islands,FRO,15,UEFA,dcdf0349,True,False
 Fiji,FIJ,0,OFC,bbf7b3fd,True,False
-Finland,FIN,40,UEFA,df3e055b,True,True
+Finland,FIN,40,UEFA,df3e055b,True,False
 France,FRA,756,UEFA,b1b36dcd,True,True
 French Guiana,GUF,5,CONCACAF,,False,False
 Gabon,GAB,0,CAF,36ce0b01,True,False
 Gambia,GAM,0,CAF,3681dede,True,False
-Georgia,GEO,24,UEFA,7158b127,True,True
+Georgia,GEO,24,UEFA,7158b127,True,False
 Germany,GER,466,UEFA,c1e40422,True,True
 Germany DR,GDR,0,FIFA,,False,False
 Ghana,GHA,0,CAF,9349828d,True,False
-Gibraltar,GIB,5,UEFA,a9c1b8fe,True,True
+Gibraltar,GIB,5,UEFA,a9c1b8fe,True,False
 Great Britain,GBR,1,Great Britain,ff9eafce,True,False
-Greece,GRE,48,UEFA,811d90a4,True,True
+Greece,GRE,48,UEFA,811d90a4,True,False
 Grenada,GRN,0,CONCACAF,846f550d,True,False
 Guadeloupe,GLP,4,CONCACAF,aebc6f4f,True,False
 Guam,GUM,0,AFC,f05f7757,True,False
@@ -94,47 +94,47 @@ Guyana,GUY,0,CONCACAF,d515f859,True,False
 Haiti,HAI,0,CONCACAF,61828292,True,False
 Honduras,HON,0,CONCACAF,a1f66233,True,False
 Hong Kong,HKG,0,AFC,0f5b0845,True,False
-Hungary,HUN,36,UEFA,b4ac5e97,True,True
-Iceland,ISL,19,UEFA,f51a42e5,True,True
+Hungary,HUN,36,UEFA,b4ac5e97,True,False
+Iceland,ISL,19,UEFA,f51a42e5,True,False
 India,IND,42,AFC,6b57f0a7,True,False
 Indonesia,IDN,0,AFC,270e8684,True,False
 IR Iran,IRN,33,AFC,6a08f71e,True,False
 Iraq,IRQ,0,AFC,ec843efd,True,False
-Israel,ISR,17,UEFA,b36227ec,True,True
+Israel,ISR,17,UEFA,b36227ec,True,False
 Italy,ITA,183,UEFA,998c5958,True,True
 Jamaica,JAM,0,CONCACAF,189bdbbd,True,False
 Japan,JPN,64,AFC,ffcf1690,True,False
 Jordan,JOR,0,AFC,3e22f0fa,True,False
-Kazakhstan,KAZ,18,UEFA,1909c17c,True,True
+Kazakhstan,KAZ,18,UEFA,1909c17c,True,False
 Kenya,KEN,0,CAF,767a4bcf,True,False
 Korea DPR,PRK,0,AFC,42c4106c,True,False
 Korea Republic,KOR,21,AFC,473f0fbf,True,False
-Kosovo,KVX,10,UEFA,b2629e33,True,True
+Kosovo,KVX,10,UEFA,b2629e33,True,False
 Kuwait,KUW,0,AFC,064dedda,True,False
 Kyrgyz Republic,KGZ,0,AFC,81792d72,True,False
 Laos,LAO,0,AFC,1443c8dd,True,False
-Latvia,LVA,21,UEFA,213d5b0c,True,True
+Latvia,LVA,21,UEFA,213d5b0c,True,False
 Lebanon,LIB,0,AFC,dde2b289,True,False
 Lesotho,LES,0,CAF,e1da222e,True,False
 Liberia,LBR,0,CAF,2355ed92,True,False
 Libya,LBY,0,CAF,48d703b0,True,False
-Liechtenstein,LIE,2,UEFA,c8f74183,True,True
-Lithuania,LTU,20,UEFA,d0683956,True,True
-Luxembourg,LUX,20,UEFA,244d97b1,True,True
+Liechtenstein,LIE,2,UEFA,c8f74183,True,False
+Lithuania,LTU,20,UEFA,d0683956,True,False
+Luxembourg,LUX,20,UEFA,244d97b1,True,False
 Macau,MAC,0,AFC,8e4e3fe9,True,False
 Madagascar,MAD,0,CAF,d2832739,True,False
 Malawi,MWI,0,CAF,f520fe48,True,False
 Malaysia,MAS,0,AFC,95259907,True,False
 Maldives,MDV,0,AFC,26ac4429,True,False
 Mali,MLI,0,CAF,344b3f52,True,False
-Malta,MLT,14,UEFA,686b37b1,True,True
+Malta,MLT,14,UEFA,686b37b1,True,False
 Martinique,MTQ,2,CONCACAF,8a97cf18,True,False
 Mauritania,MTN,0,CAF,15c92ada,True,False
 Mauritius,MRI,0,CAF,144b1dc9,True,False
 Mexico,MEX,29,CONCACAF,b009a548,True,False
-Moldova,MDA,20,UEFA,30681b8c,True,True
+Moldova,MDA,20,UEFA,30681b8c,True,False
 Mongolia,MNG,0,AFC,e3fc4df0,True,False
-Montenegro,MNE,18,UEFA,c7597f2f,True,True
+Montenegro,MNE,18,UEFA,c7597f2f,True,False
 Montserrat,MSR,0,CONCACAF,fde9fbff,True,False
 Morocco,MAR,1,CAF,af41ccda,True,False
 Mozambique,MOZ,0,CAF,6928258c,True,False
@@ -147,9 +147,9 @@ New Zealand,NZL,5,OFC,259855f0,True,False
 Nicaragua,NCA,0,CONCACAF,c00b7b1e,True,False
 Niger,NIG,0,CAF,5b081e7b,True,False
 Nigeria,NGA,0,CAF,10abc743,True,False
-North Macedonia,MKD,25,UEFA,d6f326ae,True,True
-Northern Ireland,NIR,16,UEFA,16944ae1,True,True
-Norway,NOR,53,UEFA,599eba19,True,True
+North Macedonia,MKD,25,UEFA,d6f326ae,True,False
+Northern Ireland,NIR,16,UEFA,16944ae1,True,False
+Norway,NOR,53,UEFA,599eba19,True,False
 Oman,OMA,0,AFC,bc41b1df,True,False
 Pakistan,PAK,0,AFC,73d4afb1,True,False
 Palestine,PLE,0,AFC,50a8540d,True,False
@@ -158,29 +158,29 @@ Papua New Guinea,PNG,0,OFC,e1f7b131,True,False
 Paraguay,PAR,27,CONMEBOL,d2043442,True,False
 Peru,PER,35,CONMEBOL,f711c854,True,False
 Philippines,PHI,0,AFC,3678ac61,True,False
-Poland,POL,49,UEFA,8912dcf0,True,True
+Poland,POL,49,UEFA,8912dcf0,True,False
 Portugal,POR,47,UEFA,4a1b4ea8,True,True
 Puerto Rico,PUR,2,CONCACAF,6728feaa,True,False
 Qatar,QAT,2,AFC,9b696ed1,True,False
-Republic of Ireland,IRL,18,UEFA,62e09cb6,True,True
+Republic of Ireland,IRL,18,UEFA,62e09cb6,True,False
 Réunion,REU,4,CAF,,False,False
-Romania,ROU,56,UEFA,7def9493,True,True
-Russia,RUS,53,UEFA,21ced9fe,True,True
+Romania,ROU,56,UEFA,7def9493,True,False
+Russia,RUS,53,UEFA,21ced9fe,True,False
 Rwanda,RWA,0,CAF,9de45d0a,True,False
 Samoa,SAM,0,OFC,ace5a57a,True,False
-San Marino,SMR,13,UEFA,2d5635e8,True,True
+San Marino,SMR,13,UEFA,2d5635e8,True,False
 São Tomé and Príncipe,STP,0,CAF,7488a69c,True,False
 Saudi Arabia,KSA,30,AFC,6e84edac,True,False
-Scotland,SCO,42,UEFA,602d3994,True,True
+Scotland,SCO,42,UEFA,602d3994,True,False
 Senegal,SEN,0,CAF,9ab5c684,True,False
-Serbia,SRB,47,UEFA,1d6f5c9b,True,True
+Serbia,SRB,47,UEFA,1d6f5c9b,True,False
 Serbia and Montenegro,SCG,0,FIFA,,False,False
 Seychelles,SEY,0,CAF,5993cd86,True,False
 Sierra Leone,SLE,0,CAF,d661e32f,True,False
 Singapore,SIN,0,AFC,5267635b,True,False
 Sint Maarten,SMA,0,CONCACAF,,False,False
-Slovakia,SVK,21,UEFA,66cff10b,True,True
-Slovenia,SVN,16,UEFA,6b9f868f,True,True
+Slovakia,SVK,21,UEFA,66cff10b,True,False
+Slovenia,SVN,16,UEFA,6b9f868f,True,False
 Solomon Islands,SOL,0,OFC,05a1b773,True,False
 Somalia,SOM,0,CAF,88e334f3,True,False
 South Africa,RSA,36,CAF,506f1741,True,False
@@ -193,8 +193,8 @@ St. Lucia,LCA,0,CONCACAF,d4e3c29d,True,False
 St. Vincent and the Grenadines,VIN,0,CONCACAF,a7fe0f10,True,False
 Sudan,SDN,0,CAF,489e5ff5,True,False
 Suriname,SUR,0,CONCACAF,a0323e98,True,False
-Sweden,SWE,81,UEFA,296f69e7,True,True
-Switzerland,SUI,34,UEFA,81021a70,True,True
+Sweden,SWE,81,UEFA,296f69e7,True,False
+Switzerland,SUI,34,UEFA,81021a70,True,False
 Syria,SYR,0,AFC,fd89d6e1,True,False
 Tahiti,TAH,0,OFC,7f11e153,True,False
 Tajikistan,TJK,0,AFC,1ee23a61,True,False
@@ -205,11 +205,11 @@ Togo,TOG,0,CAF,3ea29ae7,True,False
 Tonga,TGA,0,OFC,ff4428e7,True,False
 Trinidad and Tobago,TRI,0,CONCACAF,2df92663,True,False
 Tunisia,TUN,1,CAF,a7c7562a,True,False
-Türkiye,TUR,56,UEFA,ac6bcf92,True,True
+Türkiye,TUR,56,UEFA,ac6bcf92,True,False
 Turkmenistan,TKM,0,AFC,c065c760,True,False
 Turks and Caicos Islands,TCA,0,CONCACAF,009a3e92,True,False
 Uganda,UGA,0,CAF,828ead67,True,False
-Ukraine,UKR,48,UEFA,afa29a3e,True,True
+Ukraine,UKR,48,UEFA,afa29a3e,True,False
 United Arab Emirates,UAE,2,AFC,78cdba77,True,False
 United States,USA,289,CONCACAF,0f66725b,True,False
 Uruguay,URU,29,CONMEBOL,870e020f,True,False
@@ -218,7 +218,7 @@ Uzbekistan,UZB,0,AFC,cd389e75,True,False
 Vanuatu,VAN,0,OFC,4c167f55,True,False
 Venezuela,VEN,32,CONMEBOL,df384984,True,False
 Vietnam,VIE,0,AFC,5a3595f3,True,False
-Wales,WAL,23,UEFA,b1bbcad3,True,True
+Wales,WAL,23,UEFA,b1bbcad3,True,False
 Yemen,YEM,0,AFC,9345898a,True,False
 Yugoslavia,YUG,0,FIFA,7dc9f983,True,False
 Zambia,ZAM,0,CAF,454ab5d4,True,False

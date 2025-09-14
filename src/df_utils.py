@@ -1,4 +1,3 @@
-import re
 import pandas as pd
 from bs4.element import Tag
 from typing import Dict, Any
@@ -136,3 +135,45 @@ def filter_competitions(competitions_df: pd.DataFrame, comp_filter_config: Dict[
     filtered_df = filtered_df.drop_duplicates(subset=['Competition Index']) 
 
     return filtered_df
+
+
+def match_info_to_df(match_info: dict, match_code: str) -> pd.DataFrame:
+    """Convert match_info dict to a DataFrame with specific columns."""
+
+    date = match_info.get('datetime', {}).get('date')
+    time = match_info.get('datetime', {}).get('time')
+    
+    home_team = match_info.get('teams', {}).get('home', {}).get('name')
+    away_team = match_info.get('teams', {}).get('away', {}).get('name')
+    
+    attendance = match_info.get('attendance')
+    
+    venue_dict = match_info.get('venue', {})
+    venue = venue_dict.get('stadium')
+    
+    referee = match_info.get('officials', {}).get('main_referee', None)
+    notes = None
+    
+    home_score = match_info.get('scores', {}).get('home')
+    away_score = match_info.get('scores', {}).get('away')
+    
+    home_penalty = match_info.get('penalties', {}).get('home') if 'penalties' in match_info else None
+    away_penalty = match_info.get('penalties', {}).get('away') if 'penalties' in match_info else None
+    
+    row = {
+        "Date": date,
+        "Time": time,
+        "Home": home_team,
+        "Away": away_team,
+        "Attendance": attendance,
+        "Venue": venue,
+        "Referee": referee,
+        "Notes": notes,
+        "Match Code": match_code,
+        "Home Score": home_score,
+        "Away Score": away_score,
+        "Home Penalty": home_penalty,
+        "Away Penalty": away_penalty
+    }
+    
+    return pd.DataFrame([row])

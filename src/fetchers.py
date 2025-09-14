@@ -10,8 +10,8 @@ from functools import lru_cache
 from typing import Tuple, List, Dict, Any, Optional
 
 from src.utils import normalize_string_for_url, extract_hrefs
-from src.df_utils import clean_table, process_fixture, add_match_code
-from src.constants import FBREF_BASE_URL, USER_AGENT, STATS_TABLE_CLASS, COUNTRY_CODE_MAPPING
+from src.df_utils import clean_table, process_fixture, add_match_code, match_info_to_df
+from src.constants import FBREF_BASE_URL, USER_AGENT, STATS_TABLE_CLASS, COUNTRY_CODE_MAPPING, COMPETITION_CATEGORIES
 from .parsers import get_match_events, get_match_lineups, get_match_stats, get_match_info
 
 @lru_cache(maxsize=None)
@@ -150,13 +150,6 @@ def fetch_competitions() -> pd.DataFrame:
     url = f'{FBREF_BASE_URL}/en/comps/'
     tables, soup, tables_html_tags = _fetch(url) 
 
-    categories = [
-        'Club International Cups', 'National Team Competitions', 
-        'Big 5 European Leagues', 
-        'Domestic Leagues - 1st Tier', 'Domestic Leagues - 2nd Tier', 'Domestic Leagues - 3rd Tier and Lower',
-        'National Team Qualification', 'Domestic Cups', 'Domestic Youth Leagues'
-    ]
-
     clean_tables = []
     for i in range(len(tables)):
         if i == 2: continue 
@@ -165,7 +158,7 @@ def fetch_competitions() -> pd.DataFrame:
         comp_indicies = [href.split('/')[3] for href in hrefs]
 
         table = clean_table(tables[i])
-        table['Category'] = categories[i] 
+        table['Category'] = COMPETITION_CATEGORIES[i] 
         table['Competition Index'] = comp_indicies
         
         table['Format'] = 'League' if (3 <= i <= 5 or i == 8) else 'Cup'
@@ -245,43 +238,4 @@ def fetch_fixture(comp_name : str = None, comp_index : str = None, season : str 
 
     return process_fixture(table)
 
-def match_info_to_df(match_info: dict, match_code: str) -> pd.DataFrame:
-    """Convert match_info dict to a DataFrame with specific columns."""
 
-    date = match_info.get('datetime', {}).get('date')
-    time = match_info.get('datetime', {}).get('time')
-    
-    home_team = match_info.get('teams', {}).get('home', {}).get('name')
-    away_team = match_info.get('teams', {}).get('away', {}).get('name')
-    
-    attendance = match_info.get('attendance')
-    
-    venue_dict = match_info.get('venue', {})
-    venue = venue_dict.get('stadium')
-    
-    referee = match_info.get('officials', {}).get('main_referee', None)
-    notes = None
-    
-    home_score = match_info.get('scores', {}).get('home')
-    away_score = match_info.get('scores', {}).get('away')
-    
-    home_penalty = match_info.get('penalties', {}).get('home') if 'penalties' in match_info else None
-    away_penalty = match_info.get('penalties', {}).get('away') if 'penalties' in match_info else None
-    
-    row = {
-        "Date": date,
-        "Time": time,
-        "Home": home_team,
-        "Away": away_team,
-        "Attendance": attendance,
-        "Venue": venue,
-        "Referee": referee,
-        "Notes": notes,
-        "Match Code": match_code,
-        "Home Score": home_score,
-        "Away Score": away_score,
-        "Home Penalty": home_penalty,
-        "Away Penalty": away_penalty
-    }
-    
-    return pd.DataFrame([row])

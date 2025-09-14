@@ -98,3 +98,10 @@ COUNTRY_CODE_MAPPING =  {
     "USA": "United States",
     "VEN": "Venezuela"
 }
+
+COMPETITION_CATEGORIES = [
+    'Club International Cups', 'National Team Competitions', 
+    'Big 5 European Leagues', 
+    'Domestic Leagues - 1st Tier', 'Domestic Leagues - 2nd Tier', 'Domestic Leagues - 3rd Tier and Lower',
+    'National Team Qualification', 'Domestic Cups', 'Domestic Youth Leagues'
+]

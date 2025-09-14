@@ -198,7 +198,7 @@ def build_database(config_path: str, db_name: str = 'fotcer', saved_path: str = 
                 if avail_seasons[i] not in exists_seasons or i == 0
             ]
 
-            for index in update_season_indicies[:5]:
+            for index in update_season_indicies:
                 season = avail_seasons[index]
                 match_code = match_codes[index] if match_codes is not None else None
 
